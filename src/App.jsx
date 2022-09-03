@@ -32,11 +32,11 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Message:</h1>
+      {/* <h3>Messages:</h3> */}
       {messageContainer.current.map(message => <div className={message.id === me.current ? 'my-message' : 'foreign-message'} key={Math.random()}>{message.message}</div>)}
     <form className='chat-input' onSubmit={updateAllMessages}>
-      <input ref={inputRef} type='text' placeholder='Send your message...' onChange={(e) => {setMessage(e.target.value)}} value={message} required/>
-      <input type='submit' value='Send Message'/>
+      <input ref={inputRef} type='text' placeholder='Message...' onChange={(e) => {setMessage(e.target.value)}} value={message} required/><br></br>
+      <input type='submit' value='Send'/>
     </form>
     </div>
   )

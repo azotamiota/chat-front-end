@@ -1,5 +1,11 @@
-* {
+/* * {
   border: 1px dotted red;
+} */
+
+.App {
+  /* border: 1px solid grey; */
+  padding: 50px;
+  box-shadow: 0 0 10px grey;;
 }
 
 #root {
@@ -19,10 +25,14 @@
 
 .my-message {
   text-align: end;
-  padding: 5px 10px;
 }
 
 .foreign-message {
   text-align: start;
+  font-style: italic;
+}
+
+.my-message, .foreign-message {
   padding: 5px 10px;
+  border-top: 1px dotted lightgray;
 }
