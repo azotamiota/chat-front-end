@@ -35,5 +35,5 @@
 
 .my-message, .foreign-message {
   padding: 5px 0;
-  border-top: 1px dotted lightgray;
+  border-top: 2px dotted lightgray;
 }
