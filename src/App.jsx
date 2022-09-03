@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useReducer } from 'react'
 import './App.css'
 import io from 'socket.io-client'
 
-const socket = io.connect('http://localhost:3000')
+const socket = io.connect('https://millionare-chat.herokuapp.com/')
 
 function App() {
 
