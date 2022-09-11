@@ -1,0 +1,20 @@
+.card {
+  padding: 2em;
+  padding: 50px;
+  box-shadow: 0 0 10px grey;
+  max-width: 700px;
+}
+
+.my-message {
+  text-align: end;
+}
+
+.foreign-message {
+  text-align: start;
+  font-style: italic;
+}
+
+.my-message, .foreign-message {
+  padding: 5px 0;
+  border-top: 2px dotted lightgray;
+}
