@@ -16,7 +16,7 @@ function Home() {
   const handleSubmit = () => {
     console.log('submitted')
     socket.emit('user_started_chat', {username: username})
-    navigate('/chat')
+    navigate(`/chat/${username}`)
   }
 
   return ( <>

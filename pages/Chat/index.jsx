@@ -1,15 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
+import { useParams } from 'react-router-dom'
 
 import io from 'socket.io-client'
 
 import styles from './index.module.css' 
 // const socket = io.connect('https://millionare-chat.herokuapp.com/')
 const socket = io.connect('http://localhost:5000')
-console.log('socket: ', socket)
 
 function Chat() {
   
-  // const me = useRef(new Date().getTime())
+  const fetchedUsername = useParams()
+  console.log('fetchedUsername: ', fetchedUsername)
   const inputRef = useRef(null);
   const [messageContainer, setMessageContainer] = useState([])
   const [message, setMessage] = useState('')
@@ -17,46 +18,40 @@ function Chat() {
  
    const updateAllMessages = (e) => {
      e.preventDefault();
-     socket.emit('send_message', {id: me.current, message: message })
+     console.log('message to be sent: ', {username: fetchedUsername.username, message: message } )
+     socket.emit('send_message', {username: fetchedUsername.username, message: message })
      setMessage('')    
     }
     
   useEffect(()=>{
     inputRef.current.focus();
     socket.on('receive_message', (data) => {
+      console.log('receive message in this format: ', data)
         setMessageContainer((prev) => [...prev, data])
       })
 
-    socket.on('user_joined_chat', data => {
-      console.log('this is the user data from main - backend - chat backend: ', data)
-      setUsersOnline((prev) => {
-        return [...prev, data]
-      })
-    })
-
-    socket.on('updated_user_list', (data) => {
-      console.log('incoming updated user list: ', data)
-       setUsersOnline((prev) => {
-        return [...prev, data]
-       })
+    socket.on('updated_online_users', data => {
+      console.log('this is the updated online users: ', data)
+      setUsersOnline(data)
     })
 
   },[socket])
 
-  useEffect(() => {
-    console.log('all_online_users emitted to backend: ',usersOnline);
-    socket.emit('all_online_users', usersOnline)
-  }, [usersOnline])
+  console.log('usersOnline: ', usersOnline)
 
   return (
     <div className={styles['card']}>
       <ul>
       { usersOnline.map(onlineUser => {
-        // console.log('onlineUSer: ', onlineUser)
-        return <li key={Math.random()}>{onlineUser.username}</li>
+        return <li key={onlineUser.id}>{onlineUser.username}</li>
       })}
       </ul>
-      {messageContainer.map(message => <div className={message.id === me.current ? styles['my-message'] : styles['foreign-message']} key={Math.random()}>{message.message}</div>)}
+      {messageContainer.map(message => {
+        return <>
+          <div key={Math.random()}>{message.username}</div>
+          <p key={Math.random()} className={message.username === fetchedUsername.username ? styles['my-message'] : styles['foreign-message']}>{message.message}</p>
+        </>
+    })}
         <form className='chat-input' onSubmit={updateAllMessages}>
         <input ref={inputRef} type='text' placeholder='Message...' onChange={(e) => setMessage(e.target.value)} value={message} required/><br></br>
         <input className='btn btn-secondary' type='submit' value='Send'/>
