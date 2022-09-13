@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom'
 import io from 'socket.io-client'
 
 import styles from './index.module.css' 
-// const socket = io.connect('https://millionare-chat.herokuapp.com/')
-const socket = io.connect('http://localhost:5000')
+const socket = io.connect('https://millionare-chat.herokuapp.com/')
+// const socket = io.connect('http://localhost:5000')
 
 function Chat() {
   
